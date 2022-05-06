@@ -1,51 +1,170 @@
 package com.hrec.pruebadeingreso.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-class UserResponse {
+class UserResponse() : Parcelable {
     @SerializedName("id")
-    private var id: Int? = null
+    var id: Int? = null
     @SerializedName("name")
-    private var name: String? = null
+    var name: String? = null
     @SerializedName("username")
-    private var userName: String? = null
+    var userName: String? = null
     @SerializedName("email")
-    private var email: String? = null
+    var email: String? = null
     @SerializedName("address")
-    private var address: AddressResponse? = null
+    var address: AddressResponse? = null
     @SerializedName("phone")
-    private var phone: String? = null
+    var phone: String? = null
     @SerializedName("website")
-    private var website: String? = null
+    var website: String? = null
     @SerializedName("company")
-    private var company: CompanyResponse? = null
+    var company: CompanyResponse? = null
+
+    constructor(parcel: Parcel) : this() {
+        id = parcel.readValue(Int::class.java.classLoader) as? Int
+        name = parcel.readString()
+        userName = parcel.readString()
+        email = parcel.readString()
+        address = parcel.readParcelable(AddressResponse::class.java.classLoader)
+        phone = parcel.readString()
+        website = parcel.readString()
+        company = parcel.readParcelable(CompanyResponse::class.java.classLoader)
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(id)
+        parcel.writeString(name)
+        parcel.writeString(userName)
+        parcel.writeString(email)
+        parcel.writeParcelable(address, flags)
+        parcel.writeString(phone)
+        parcel.writeString(website)
+        parcel.writeParcelable(company, flags)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<UserResponse> {
+        override fun createFromParcel(parcel: Parcel): UserResponse {
+            return UserResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<UserResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
+
 }
 
-class AddressResponse {
+class AddressResponse() : Parcelable {
     @SerializedName("street")
-    private var street: String? = null
+    var street: String? = null
     @SerializedName("suite")
-    private var suite: String? = null
+    var suite: String? = null
     @SerializedName("city")
-    private var city: String? = null
+    var city: String? = null
     @SerializedName("zipcode")
-    private var zipcode: String? = null
+    var zipcode: String? = null
     @SerializedName("geo")
-    private var geo: GeoResponse? = null
+    var geo: GeoResponse? = null
+
+    constructor(parcel: Parcel) : this() {
+        street = parcel.readString()
+        suite = parcel.readString()
+        city = parcel.readString()
+        zipcode = parcel.readString()
+        geo = parcel.readParcelable(GeoResponse::class.java.classLoader)
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(street)
+        parcel.writeString(suite)
+        parcel.writeString(city)
+        parcel.writeString(zipcode)
+        parcel.writeParcelable(geo, flags)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<AddressResponse> {
+        override fun createFromParcel(parcel: Parcel): AddressResponse {
+            return AddressResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<AddressResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
 
-class GeoResponse {
+class GeoResponse() : Parcelable {
     @SerializedName("lat")
-    private var lat: String? = null
+    var lat: String? = null
     @SerializedName("lng")
-    private var lng: String? = null
+    var lng: String? = null
+
+    constructor(parcel: Parcel) : this() {
+        lat = parcel.readString()
+        lng = parcel.readString()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(lat)
+        parcel.writeString(lng)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<GeoResponse> {
+        override fun createFromParcel(parcel: Parcel): GeoResponse {
+            return GeoResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<GeoResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
 
-class CompanyResponse {
+class CompanyResponse() : Parcelable {
     @SerializedName("name")
-    private var name: String? = null
+    var name: String? = null
     @SerializedName("catchPhrase")
-    private var catchPhrase: String? = null
+    var catchPhrase: String? = null
     @SerializedName("bs")
-    private var bs: String? = null
+    var bs: String? = null
+
+    constructor(parcel: Parcel) : this() {
+        name = parcel.readString()
+        catchPhrase = parcel.readString()
+        bs = parcel.readString()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(name)
+        parcel.writeString(catchPhrase)
+        parcel.writeString(bs)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<CompanyResponse> {
+        override fun createFromParcel(parcel: Parcel): CompanyResponse {
+            return CompanyResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<CompanyResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

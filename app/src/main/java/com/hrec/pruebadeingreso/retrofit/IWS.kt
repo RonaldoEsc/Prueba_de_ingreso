@@ -9,16 +9,22 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 import java.net.CookieManager
 import java.net.CookiePolicy
 import java.util.concurrent.TimeUnit
 
 interface IWS {
+    @Headers("Content-Type:application/json")
     @GET("users")
     fun getUsers(): Call<JsonArray>
+
+    @Headers("Content-Type:application/json")
     @GET("posts")
     fun getPosts(): Call<JsonArray>
+
+    @Headers("Content-Type:application/json")
     @GET("posts")
     fun getPosts(@Query("userId") userId: Int): Call<JsonArray>
 
